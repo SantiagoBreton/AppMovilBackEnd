@@ -2,6 +2,7 @@ import express from 'express';
 import userRouter from './routes/user';
 import eventRouter from './routes/event';
 import getEventsRouter from './routes/getEvents';
+import getEventsByUserIdRouter from './routes/getEventsByUserId';
 import prisma from './prisma';
 
 const app = express();
@@ -12,6 +13,7 @@ const port = 3000;
 app.use('/', userRouter);
 app.use('/', eventRouter);
 app.use('/', getEventsRouter);
+app.use('/', getEventsByUserIdRouter);
 
 app.get('/', (_req, res) => {
     res.send('Hello World!!');
