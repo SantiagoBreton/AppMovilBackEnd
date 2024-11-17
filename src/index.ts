@@ -6,6 +6,7 @@ import getEventsByUserIdRouter from './routes/getEventsByUserId';
 import deleteEventByIdRouter from './routes/deleteEventById';
 import authRouter from './authRoutes/authRoutes';
 import userLoginRouter from './routes/userLogin';
+import subscribeToEventRouter from './routes/suscribeToAnEvent';
 import prisma from './prisma';
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 const port = 3000;
 
 app.use('/auth', authRouter);
+app.use('/', subscribeToEventRouter);
 app.use('/', userLoginRouter);
 app.use('/', userRouter);
 app.use('/', eventRouter);
