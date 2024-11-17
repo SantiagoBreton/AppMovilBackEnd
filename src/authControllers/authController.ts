@@ -40,14 +40,17 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
 
         let isPasswordValid = false;
 
-        // Check if the password is hashed
-        if (user.password.startsWith('$2a$')) {
-            // Compare hashed password
-            isPasswordValid = await bcrypt.compare(password, user.password);
-        } else {
-            // Compare plain text password
-            isPasswordValid = password === user.password;
-        }
+        // // Check if the password is hashed
+        // if (user.password.startsWith('$2a$')) {
+        //     // Compare hashed password
+        //     isPasswordValid = await bcrypt.compare(password, user.password);
+        // } else {
+        //     // Compare plain text password
+        //     isPasswordValid = password === user.password;
+        // }
+
+
+        isPasswordValid = password === user.password || await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
             console.log('Invalid password');
