@@ -42,8 +42,8 @@ model Event {
 model EventUser {
   userId    Int
   eventId   Int
-  user      User   @relation(fields: [userId], references: [id])
-  event     Event  @relation(fields: [eventId], references: [id])
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@id([userId, eventId]) // Composite primary key
 }
