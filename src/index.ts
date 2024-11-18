@@ -7,9 +7,10 @@ import deleteEventByIdRouter from './routes/deleteEventById';
 import authRouter from './authRoutes/authRoutes';
 import userLoginRouter from './routes/userLogin';
 import subscribeToEventRouter from './routes/suscribeToAnEvent';
-import getSubscribedEventsRouter from './routes/getSubscribedEvents';
+
 import userDataRouter from './routes/getUserData';
 import prisma from './prisma';
+import getSubscribedEventsRouter from './routes/getSubscribedEvents';
 
 const app = express();
 app.use(express.json());
