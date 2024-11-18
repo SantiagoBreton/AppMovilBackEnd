@@ -15,6 +15,11 @@ export const subscribeToEvent = async (req: Request, res: Response) => {
       return;
     }
 
+    if (event.userId === userId) {
+      res.status(400).json({ error: 'No puedes suscribirte a tu propio evento.' });
+      return;
+    }
+
     if (event.currentParticipants === event.maxParticipants) {
       res.status(400).json({ error: 'Que desgracia Amigo, este evento ya esta lleno' });
       return;
