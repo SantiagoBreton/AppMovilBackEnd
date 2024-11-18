@@ -7,6 +7,7 @@ import deleteEventByIdRouter from './routes/deleteEventById';
 import authRouter from './authRoutes/authRoutes';
 import userLoginRouter from './routes/userLogin';
 import subscribeToEventRouter from './routes/suscribeToAnEvent';
+import getSubscribedEventsRouter from './routes/getSubscribedEvents';
 import userDataRouter from './routes/getUserData';
 import prisma from './prisma';
 
@@ -15,6 +16,7 @@ app.use(express.json());
 const port = 3000;
 
 app.use('/auth', authRouter);
+app.use('/', getSubscribedEventsRouter);
 app.use('/', subscribeToEventRouter);
 app.use('/', userLoginRouter);
 app.use('/', userRouter);
