@@ -12,6 +12,8 @@ export const createEvent = async (req: Request, res: Response) => {
             date,
             latitude,
             longitude,
+            latitudeOffset: (Math.random() - 0.5) * (500 / 111000),
+            longitudeOffset: (Math.random() - 0.5) * (500 / 111000),
             description,
             maxParticipants,
             currentParticipants,

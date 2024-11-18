@@ -31,6 +31,8 @@ model Event {
   date DateTime
   latitude Float
   longitude Float
+  latitudeOffset Float
+  longitudeOffset Float
   description String
   maxParticipants Int
   currentParticipants Int
