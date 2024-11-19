@@ -7,10 +7,11 @@ import deleteEventByIdRouter from './routes/deleteEventById';
 import authRouter from './authRoutes/authRoutes';
 import userLoginRouter from './routes/userLogin';
 import subscribeToEventRouter from './routes/suscribeToAnEvent';
-
 import userDataRouter from './routes/getUserData';
 import prisma from './prisma';
 import getSubscribedEventsRouter from './routes/getSubscribedEvents';
+import getEventByPartialNameRouter from './routes/getEventByName';
+import { getUserByPartialName } from './controllers/getUserByName';
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,8 @@ app.use('/', getEventsRouter);
 app.use('/', getEventsByUserIdRouter);
 app.use('/', deleteEventByIdRouter);
 app.use('/', userDataRouter);
+app.use('/', getEventByPartialNameRouter);
+app.get('/getUserByPartialName/:name', getUserByPartialName);
 
 app.get('/', (_req, res) => {
     res.send('Hello World!!');
