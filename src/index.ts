@@ -12,12 +12,16 @@ import prisma from './prisma';
 import getSubscribedEventsRouter from './routes/getSubscribedEvents';
 import getEventByPartialNameRouter from './routes/getEventByName';
 import { getUserByPartialName } from './controllers/getUserByName';
+import getAllUsersSubscribedToAnEventRouter from './routes/getAllUsersSubscribedToAnEvent';
+import unsubscribeUserFromEventRouter from './routes/unsubscribeUserFromEvent';
 
 const app = express();
 app.use(express.json());
 const port = 3000;
 
 app.use('/auth', authRouter);
+app.use('/', unsubscribeUserFromEventRouter);
+app.use('/', getAllUsersSubscribedToAnEventRouter);
 app.use('/', getSubscribedEventsRouter);
 app.use('/', subscribeToEventRouter);
 app.use('/', userLoginRouter);
