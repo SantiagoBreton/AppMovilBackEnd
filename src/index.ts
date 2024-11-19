@@ -14,12 +14,14 @@ import getEventByPartialNameRouter from './routes/getEventByName';
 import { getUserByPartialName } from './controllers/getUserByName';
 import getAllUsersSubscribedToAnEventRouter from './routes/getAllUsersSubscribedToAnEvent';
 import unsubscribeUserFromEventRouter from './routes/unsubscribeUserFromEvent';
+import updateEventDateRouter from './routes/updateEventDate';
 
 const app = express();
 app.use(express.json());
 const port = 3000;
 
 app.use('/auth', authRouter);
+app.use('/', updateEventDateRouter);
 app.use('/', unsubscribeUserFromEventRouter);
 app.use('/', getAllUsersSubscribedToAnEventRouter);
 app.use('/', getSubscribedEventsRouter);
