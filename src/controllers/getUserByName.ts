@@ -6,7 +6,7 @@ export const getUserByPartialName = async (req: Request, res: Response) => {
 
     try {
         // Fetch events from the database, filtrando por nombre
-        const events = await prisma.event.findMany({
+        const events = await prisma.user.findMany({
             where: {
                 name: {
                     contains: name, // Filtrar por eventos que contengan el nombre
