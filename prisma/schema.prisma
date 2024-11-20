@@ -23,6 +23,8 @@ model User {
   event Event[]
 
   EventUser EventUser[]
+
+  UserProfileImage UserProfileImage[]
 }
 
 model Event {
@@ -48,4 +50,11 @@ model EventUser {
   event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@id([userId, eventId]) // Composite primary key
+}
+
+model UserProfileImage {
+  id Int @id @default(autoincrement())
+  userId Int
+  imageUrl String
+  user User @relation(fields: [userId], references: [id])
 }
