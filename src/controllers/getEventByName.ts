@@ -12,6 +12,9 @@ export const getEventByPartialName = async (req: Request, res: Response) => {
                     contains: name, // Filtrar por eventos que contengan el nombre
                     mode: "insensitive"
                 },
+                date: {
+                    gte: new Date(), // Filtrar por eventos futuros
+                },
             },
         });
         res.json(events); // Responder con los eventos en formato JSON
