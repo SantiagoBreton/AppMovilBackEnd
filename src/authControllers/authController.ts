@@ -6,7 +6,7 @@ import prisma from '../prisma';
 const secret = 'your_jwt_secret'; // Use a secure secret in production
 
 export const register = async (req: Request, res: Response) => {
-    const { email, name, password } = req.body;
+    const { email, name, password,rating } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
@@ -15,6 +15,8 @@ export const register = async (req: Request, res: Response) => {
                 email,
                 name,
                 password: hashedPassword,
+                rating
+
             },
         });
         console.log('User registered:', user);

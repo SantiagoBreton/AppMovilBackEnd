@@ -14,6 +14,8 @@ import getEventByPartialNameRouter from './routes/getEventByName';
 import { getUserByPartialName } from './controllers/getUserByName';
 import getAllUsersSubscribedToAnEventRouter from './routes/getAllUsersSubscribedToAnEvent';
 import unsubscribeUserFromEventRouter from './routes/unsubscribeUserFromEvent';
+import getUserRatingRouter from './routes/getUserRating';
+import createNewUserRatingRouter from './routes/createNewRating';
 
 import updateEventRouter from './routes/updateEvent';
 
@@ -36,6 +38,8 @@ app.use('/', getEventsByUserIdRouter);
 app.use('/', deleteEventByIdRouter);
 app.use('/', userDataRouter);
 app.use('/', getEventByPartialNameRouter);
+app.use('/', getUserRatingRouter);
+app.use('/', createNewUserRatingRouter);
 app.get('/getUserByPartialName/:name', getUserByPartialName);
 
 app.get('/', (_req, res) => {

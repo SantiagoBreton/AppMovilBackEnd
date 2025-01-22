@@ -3,7 +3,7 @@ import prisma from '../prisma';
 
 
 export const createEvent = async (req: Request, res: Response) => {
-    const { name, date, latitude, longitude, description, maxParticipants,currentParticipants,userId } = req.body;
+    const { name, date, latitude, longitude, description, maxParticipants,currentParticipants,rating,userId } = req.body;
     console.log(name, date, latitude, longitude, description, maxParticipants,currentParticipants,userId);
     
     const newEvent = await prisma.event.create({
@@ -17,6 +17,7 @@ export const createEvent = async (req: Request, res: Response) => {
             description,
             maxParticipants,
             currentParticipants,
+            rating,
             userId
         },
     })

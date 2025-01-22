@@ -19,12 +19,21 @@ model User {
   email String  @unique
   name  String
   password String
+  rating Float
 
   event Event[]
 
   EventUser EventUser[]
 
   UserProfileImage UserProfileImage[]
+
+  EventPendingRequest EventPendingRequest[]
+
+  EventRatingByUser EventRatingByUser[]
+
+  UserRatingByUser UserRatingByUser[] @relation(name: "UserRatingUser")
+
+  ratedByUsers UserRatingByUser[] @relation(name: "UserRatingRatingUser")
 }
 
 model Event {
@@ -38,10 +47,48 @@ model Event {
   description String
   maxParticipants Int
   currentParticipants Int
+  rating Float
   userId Int
   user User @relation(fields: [userId], references: [id])
   EventUser EventUser[]
+
+  EventPendingRequest EventPendingRequest[]
+
+  EventRatingByUser EventRatingByUser[]
 }
+
+model EventRatingByUser {
+  id Int @id @default(autoincrement())
+  userId Int
+  eventId Int
+  comment String
+  rating Int
+  user User @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+
+
+model UserRatingByUser {
+  id Int @id @default(autoincrement())
+  userId Int
+  ratingUserId Int
+  comment String
+  rating Int
+  user User @relation(fields: [userId], references: [id], name: "UserRatingUser")
+  ratingUser User @relation(fields: [ratingUserId], references: [id], name: "UserRatingRatingUser")
+}
+
+
+
+model EventPendingRequest {
+  id Int @id @default(autoincrement())
+  userId Int
+  eventId Int
+  user User @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+}
+
 
 model EventUser {
   userId    Int
