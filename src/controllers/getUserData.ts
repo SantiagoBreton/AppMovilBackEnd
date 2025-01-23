@@ -13,7 +13,9 @@ export const getUserData = async (req: Request, res: Response) => {
             res.status(404).json({ error: 'Usuario no encontrado.' });
             return;
         }
-        res.json(user);
+        const userWithoutPassword = { id: user.id,name: user.name, email: user.email, rating:user.rating};
+
+        res.json(userWithoutPassword);
     } catch (error) {
         res.status(500).json({ error: 'No se ha podido obtener la informacion del usuario, intentalo mas tarde.' });
     }
