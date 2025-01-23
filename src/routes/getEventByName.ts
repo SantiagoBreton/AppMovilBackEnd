@@ -3,6 +3,6 @@ import { getEventByPartialName } from "../controllers/getEventByName";
 
 const getEventByPartialNameRouter = Router();
 
-getEventByPartialNameRouter.get('/getEventByPartialName/:name', getEventByPartialName);
+getEventByPartialNameRouter.get('/getEventByPartialName/:currentUserId/:name', getEventByPartialName);
 
 export default getEventByPartialNameRouter;

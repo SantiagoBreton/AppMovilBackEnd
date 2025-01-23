@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 import prisma from '../prisma';
 
 export const getEventByPartialName = async (req: Request, res: Response) => {
-    const { name } = req.params; // Obtener el nombre desde los parámetros de la ruta
-
+    //const { name } = req.params; // Obtener el nombre desde los parámetros de la ruta
+    const { currentUserId, name } = req.params;
+    
     try {
         // Fetch events from the database, filtrando por nombre
         const events = await prisma.event.findMany({
@@ -15,6 +16,10 @@ export const getEventByPartialName = async (req: Request, res: Response) => {
                 date: {
                     gte: new Date(), // Filtrar por eventos futuros
                 },
+                userId: {
+                    not: Number(currentUserId)
+                }
+
             },
         });
         res.json(events); // Responder con los eventos en formato JSON
