@@ -29,3 +29,5 @@ ALTER TABLE "UserRatingByUser" ADD CONSTRAINT "UserRatingByUser_userId_fkey" FOR
 
 -- AddForeignKey
 ALTER TABLE "UserRatingByUser" ADD CONSTRAINT "UserRatingByUser_ratingUserId_fkey" FOREIGN KEY ("ratingUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
