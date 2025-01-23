@@ -24,27 +24,16 @@ export const subscribeToEvent = async (req: Request, res: Response) => {
       res.status(400).json({ error: 'Que desgracia Amigo, este evento ya esta lleno' });
       return;
     }
-    const eventUser = await prisma.eventUser.create({
+    const eventUser = await prisma.eventPendingRequest.create({
       data: {
         userId,
         eventId,
       },
     });
 
-    const updateEventParticipants = await prisma.event.update({
-      where: {
-        id: eventId,
-      },
-      data: {
-        currentParticipants: {
-          increment: 1,
-        },
-      },
-    });
-
     res.status(201).json(eventUser);
   } catch (error) {
-    res.status(500).json({ error: 'No has podido suscribirte al evento, intentalo ams tarde.' });
+    res.status(500).json({ error: 'No has podido suscribirte al evento, intentalo mas tarde.' });
   }
 };
 

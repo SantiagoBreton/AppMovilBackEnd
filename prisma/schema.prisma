@@ -82,11 +82,11 @@ model UserRatingByUser {
 
 
 model EventPendingRequest {
-  id Int @id @default(autoincrement())
   userId Int
   eventId Int
   user User @relation(fields: [userId], references: [id])
   event Event @relation(fields: [eventId], references: [id])
+  @@id([userId, eventId])
 }
 
 
