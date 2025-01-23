@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import prisma from '../prisma';
 
 export const confirmSubscriptionToAnEvent = async (req: Request, res: Response) => {
-  const { userId, eventId } = req.body;
+  const { eventId,userId } = req.body;
   try {
     const event = await prisma.event.findUnique({
       where: {

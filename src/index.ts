@@ -17,6 +17,8 @@ import unsubscribeUserFromEventRouter from './routes/unsubscribeUserFromEvent';
 import getUserRatingRouter from './routes/getUserRating';
 import createNewUserRatingRouter from './routes/createNewRating';
 import confirmSubscriptionToAnEventRouter from './routes/confirmSubscriptionToAnEvent';
+import getAllRequestingUsersToAnEventRouter from './routes/getAllRequestingUsersToAnEvent';
+import denySubscriptionToAnEventRouter from './routes/denySubscriptionToAnEvent';
 
 import updateEventRouter from './routes/updateEvent';
 
@@ -42,6 +44,8 @@ app.use('/', getEventByPartialNameRouter);
 app.use('/', getUserRatingRouter);
 app.use('/', createNewUserRatingRouter);
 app.use('/', confirmSubscriptionToAnEventRouter);
+app.use('/', getAllRequestingUsersToAnEventRouter);
+app.use('/', denySubscriptionToAnEventRouter);
 app.get('/getUserByPartialName/:name', getUserByPartialName);
 
 app.get('/', (_req, res) => {
