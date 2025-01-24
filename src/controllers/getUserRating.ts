@@ -7,7 +7,18 @@ export const getUserRating = async (req: Request, res: Response) => {
         const allRatings = await prisma.userRatingByUser.findMany({
             where: {
                 userId: parseInt(userId)
+            },
+            include: {
+                ratingUser: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        rating: true
+                    }
+                }
             }
+
         });
         res.json(allRatings);
     } catch (error) {
