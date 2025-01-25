@@ -1,7 +1,4 @@
 import express from 'express';
-import multer from 'multer';
-import bodyParser from 'body-parser';
-import { Request, Response } from 'express';
 import userRouter from './routes/user';
 import eventRouter from './routes/event';
 import getEventsRouter from './routes/getEvents';
@@ -24,8 +21,9 @@ import getAllRequestingUsersToAnEventRouter from './routes/getAllRequestingUsers
 import denySubscriptionToAnEventRouter from './routes/denySubscriptionToAnEvent';
 import updateEventRouter from './routes/updateEvent';
 import getUserProfileImageRouter from './routes/getUserProfileImage';
-import path from 'path';
-
+import uploadUserProfileImageRouter from './routes/uploadUserProfileImage';
+import uploadUserBannerRouter from './routes/uploadUserBanner';
+import getUserBannerImageRouter from './routes/getUserBannerImage';
 
 const app = express();
 app.use(express.json());
@@ -55,65 +53,68 @@ app.use('/', confirmSubscriptionToAnEventRouter);
 app.use('/', getAllRequestingUsersToAnEventRouter);
 app.use('/', denySubscriptionToAnEventRouter);
 app.use('/', getUserProfileImageRouter);
+app.use('/', uploadUserProfileImageRouter);
+app.use('/', uploadUserBannerRouter);
+app.use('/', getUserBannerImageRouter);
 app.get('/getUserByPartialName/:name', getUserByPartialName);
 
 
 
 
 
-app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
+//app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 
 
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Save files to 'uploads' folder
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname); // Use the original file name
-    },
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads/'); // Save files to 'uploads' folder
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.originalname); // Use the original file name
+//     },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-// Handle file uploads
-app.post('/send', upload.single('file'), async (req: Request, res: Response) => {
-    const file = req.file; // The uploaded file
-    const { userId } = req.body; // The userId sent from the frontend
+// // Handle file uploads
+// app.post('/send', upload.single('file'), async (req: Request, res: Response) => {
+//     const file = req.file; // The uploaded file
+//     const { userId } = req.body; // The userId sent from the frontend
 
-    if (!file) {
-        res.status(400).send({ error: 'No file uploaded' });
-        return;
-    }
+//     if (!file) {
+//         res.status(400).send({ error: 'No file uploaded' });
+//         return;
+//     }
 
 
 
-    if (!file) {
-        res.status(400).send({ error: 'No file uploaded' });
-        return;
-    }
-    const UpdateUserProfileImage = await prisma.userProfileImage.updateMany({
-        where: {
-            userId: parseInt(userId),
-        },
-        data: {
-            imageUrl: file.originalname,
-        },
-    });
+//     if (!file) {
+//         res.status(400).send({ error: 'No file uploaded' });
+//         return;
+//     }
+//     const UpdateUserProfileImage = await prisma.userProfileImage.updateMany({
+//         where: {
+//             userId: parseInt(userId),
+//         },
+//         data: {
+//             imageUrl: file.originalname,
+//         },
+//     });
     
 
 
 
-    if (!UpdateUserProfileImage) {
-        console.log('Error saving image to database:', UpdateUserProfileImage);
-    }
-    else {
-        console.log('Image saved to database:');
-    }
+//     if (!UpdateUserProfileImage) {
+//         console.log('Error saving image to database:', UpdateUserProfileImage);
+//     }
+//     else {
+//         console.log('Image saved to database:');
+//     }
 
-    res.status(200).send({ message: 'File uploaded successfully', file });
-});
+//     res.status(200).send({ message: 'File uploaded successfully', file });
+// });
 
 
 

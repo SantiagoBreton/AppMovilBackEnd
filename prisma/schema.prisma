@@ -34,6 +34,8 @@ model User {
   UserRatingByUser UserRatingByUser[] @relation(name: "UserRatingUser")
 
   ratedByUsers UserRatingByUser[] @relation(name: "UserRatingRatingUser")
+
+  UserBannereImage UserBannereImage[]
 }
 
 model Event {
@@ -100,6 +102,13 @@ model EventUser {
 }
 
 model UserProfileImage {
+  id Int @id @default(autoincrement())
+  userId Int
+  imageUrl String
+  user User @relation(fields: [userId], references: [id])
+}
+
+model UserBannereImage {
   id Int @id @default(autoincrement())
   userId Int
   imageUrl String
