@@ -24,6 +24,7 @@ import getUserProfileImageRouter from './routes/getUserProfileImage';
 import uploadUserProfileImageRouter from './routes/uploadUserProfileImage';
 import uploadUserBannerRouter from './routes/uploadUserBanner';
 import getUserBannerImageRouter from './routes/getUserBannerImage';
+import updateProfileRouter from './routes/updateProfile';
 
 const app = express();
 app.use(express.json());
@@ -34,7 +35,7 @@ const port = 3000;
 
 app.use('/auth', authRouter);
 app.use('/', updateEventRouter);
-
+app.use('/', updateProfileRouter);
 app.use('/', unsubscribeUserFromEventRouter);
 app.use('/', getAllUsersSubscribedToAnEventRouter);
 app.use('/', getSubscribedEventsRouter);
