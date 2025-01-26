@@ -25,6 +25,7 @@ import uploadUserProfileImageRouter from './routes/uploadUserProfileImage';
 import uploadUserBannerRouter from './routes/uploadUserBanner';
 import getUserBannerImageRouter from './routes/getUserBannerImage';
 import updateProfileRouter from './routes/updateProfile';
+import getHostInfoByEventIdRouter from './routes/getHostInfoByEventId';
 
 const app = express();
 app.use(express.json());
@@ -58,6 +59,7 @@ app.use('/', uploadUserProfileImageRouter);
 app.use('/', uploadUserBannerRouter);
 app.use('/', getUserBannerImageRouter);
 app.get('/getUserByPartialName/:name', getUserByPartialName);
+app.use('/', getHostInfoByEventIdRouter);
 
 
 
