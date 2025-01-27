@@ -33,7 +33,7 @@ export const uploadUserBanner = async (req: Request, res: Response) => {
     }
 
     // Update the user's profile image in the database
-    const UpdateUserProfileImage = await prisma.userBannereImage.updateMany({
+    const UpdateUserProfileImage = await prisma.userBannerImage.updateMany({
       where: {
         userId: parseInt(userId, 10),
       },

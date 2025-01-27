@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -15,11 +15,12 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
   password String
-  rating Float
+  rating   Float
+  description String @default("No description")
 
   event Event[]
 
@@ -29,88 +30,78 @@ model User {
 
   EventPendingRequest EventPendingRequest[]
 
-  EventRatingByUser EventRatingByUser[]
-
   UserRatingByUser UserRatingByUser[] @relation(name: "UserRatingUser")
 
   ratedByUsers UserRatingByUser[] @relation(name: "UserRatingRatingUser")
 
-  UserBannereImage UserBannereImage[]
+  UserBannerImage UserBannerImage[]
 }
 
 model Event {
-  id Int @id @default(autoincrement())
-  name String
-  date DateTime
-  latitude Float
-  longitude Float
-  latitudeOffset Float
-  longitudeOffset Float
-  description String
-  maxParticipants Int
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  date                DateTime
+  latitude            Float
+  longitude           Float
+  latitudeOffset      Float
+  longitudeOffset     Float
+  description         String
+  maxParticipants     Int
   currentParticipants Int
-  rating Float
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  EventUser EventUser[]
-
+  rating              Float
+  time                String
+  categoryId          Int                  
+  userId              Int
+  category            category              @relation(fields: [categoryId], references: [categoryId])
+  user                User                  @relation(fields: [userId], references: [id])
+  EventUser           EventUser[]
   EventPendingRequest EventPendingRequest[]
-
-  EventRatingByUser EventRatingByUser[]
 }
 
-model EventRatingByUser {
-  id Int @id @default(autoincrement())
-  userId Int
-  eventId Int
-  comment String
-  rating Int
-  user User @relation(fields: [userId], references: [id])
-  event Event @relation(fields: [eventId], references: [id])
+model category {
+  categoryId Int     @id @default(autoincrement())
+  name       String
+  Event      Event[]
 }
-
-
 
 model UserRatingByUser {
-  id Int @id @default(autoincrement())
-  userId Int
+  id           Int    @id @default(autoincrement())
+  userId       Int
   ratingUserId Int
-  comment String
-  rating Int
-  user User @relation(fields: [userId], references: [id], name: "UserRatingUser")
-  ratingUser User @relation(fields: [ratingUserId], references: [id], name: "UserRatingRatingUser")
+  comment      String
+  rating       Int
+  user         User   @relation(fields: [userId], references: [id], name: "UserRatingUser")
+  ratingUser   User   @relation(fields: [ratingUserId], references: [id], name: "UserRatingRatingUser")
 }
 
-
-
 model EventPendingRequest {
-  userId Int
+  userId  Int
   eventId Int
-  user User @relation(fields: [userId], references: [id])
-  event Event @relation(fields: [eventId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
+  event   Event @relation(fields: [eventId], references: [id])
+
   @@id([userId, eventId])
 }
 
-
 model EventUser {
-  userId    Int
-  eventId   Int
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId  Int
+  eventId Int
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@id([userId, eventId]) // Composite primary key
 }
 
 model UserProfileImage {
-  id Int @id @default(autoincrement())
-  userId Int
+  id       Int    @id @default(autoincrement())
+  userId   Int
   imageUrl String
-  user User @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id])
 }
 
-model UserBannereImage {
-  id Int @id @default(autoincrement())
-  userId Int
+model UserBannerImage {
+  id       Int    @id @default(autoincrement())
+  userId   Int
   imageUrl String
-  user User @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id])
 }

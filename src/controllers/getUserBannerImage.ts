@@ -6,7 +6,7 @@ export const getUserBannerImage = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     try {
-        const userProfileImage = await prisma.userBannereImage.findMany({
+        const userProfileImage = await prisma.userBannerImage.findMany({
             where: { userId: Number(userId) },
         });
 

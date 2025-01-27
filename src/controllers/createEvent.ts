@@ -3,9 +3,20 @@ import prisma from '../prisma';
 
 
 export const createEvent = async (req: Request, res: Response) => {
-    const { name, date, latitude, longitude, description, maxParticipants,currentParticipants,rating,userId } = req.body;
-    console.log(name, date, latitude, longitude, description, maxParticipants,currentParticipants,userId);
+    const { name, date, latitude, longitude, description, maxParticipants,currentParticipants,rating,time, categoryName,userId } = req.body;
+    console.log(name, date, latitude, longitude, description, maxParticipants,currentParticipants,userId, categoryName);
+
+    const category = await prisma.category.findFirst({
+        where: {
+            name: categoryName
+        }
+    });
     
+    if (!category) {
+        return 
+    }
+    const categoryId = category.categoryId;
+
     const newEvent = await prisma.event.create({
         data: {
             name,
@@ -18,6 +29,8 @@ export const createEvent = async (req: Request, res: Response) => {
             maxParticipants,
             currentParticipants,
             rating,
+            time,
+            categoryId,
             userId
         },
     })

@@ -22,7 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
         }
     })
 
-    const userBannerImage = await prisma.userBannereImage.create({
+    const userBannerImage = await prisma.userBannerImage.create({
         data: {
             imageUrl: 'defaultBannerImage.jpg',
             userId: user.id
