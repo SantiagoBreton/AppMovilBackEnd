@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import prisma from '../prisma';
 
 export const updateEvent = async (req: Request, res: Response) => {
-    const { eventId, newName, newDescription, newDate } = req.params; // Obtener el userId desde los parámetros de la ruta
+    const { eventId, newName, newDescription, newDate,newTime } = req.params; // Obtener el userId desde los parámetros de la ruta
 
     try {
         const parsedDate = new Date(newDate);
@@ -18,6 +18,7 @@ export const updateEvent = async (req: Request, res: Response) => {
                 name: newName,
                 description: newDescription,
                 date: parsedDate.toISOString(), // Convert to ISO format
+                time: newTime
             },
         });
 

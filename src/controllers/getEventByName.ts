@@ -21,7 +21,15 @@ export const getEventByPartialName = async (req: Request, res: Response) => {
                 }
 
             },
+            include : {
+                category: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
         });
+    
         res.json(events); // Responder con los eventos en formato JSON
     } catch (error) {
         console.error('Error fetching events:', error);

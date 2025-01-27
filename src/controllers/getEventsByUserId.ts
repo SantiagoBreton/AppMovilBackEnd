@@ -10,6 +10,13 @@ export const getEventsByUserId = async (req: Request, res: Response) => {
             where: {
                 userId: Number(userId), // Convertir userId a número
             },
+            include: { 
+                category: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
         });
 
         res.json(events); // Responder con los eventos en formato JSON
