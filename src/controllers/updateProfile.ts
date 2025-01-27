@@ -3,7 +3,7 @@ import prisma from '../prisma';
 import bcrypt from 'bcryptjs';
 
 export const updateProfile = async (req: Request, res: Response) => {
-    const { userId, newName, newPassword } = req.params;
+    const { userId, newName, newPassword, newDescription } = req.params;
     if (newPassword != '') {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         try {
@@ -14,6 +14,7 @@ export const updateProfile = async (req: Request, res: Response) => {
                 data: {
                     name: newName,
                     password: hashedPassword,
+                    description: newDescription
                 }
             });
 
@@ -30,6 +31,7 @@ export const updateProfile = async (req: Request, res: Response) => {
                 },
                 data: {
                     name: newName,
+                    description: newDescription
                 }
             });
 

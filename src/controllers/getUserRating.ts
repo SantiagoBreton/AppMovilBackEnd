@@ -14,7 +14,8 @@ export const getUserRating = async (req: Request, res: Response) => {
                         id: true,
                         name: true,
                         email: true,
-                        rating: true
+                        rating: true,
+                        description: true
                     }
                 }
             }
