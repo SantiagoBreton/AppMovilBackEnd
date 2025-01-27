@@ -3,6 +3,6 @@ import { getEvents } from "../controllers/getEvents";
 
 const getEventsRouter = Router();
 
-getEventsRouter.get('/getEvents', getEvents);
+getEventsRouter.get('/getEvents/:distanceRadius/:userLatitude/:userLongitude', getEvents);
 
 export default getEventsRouter;
