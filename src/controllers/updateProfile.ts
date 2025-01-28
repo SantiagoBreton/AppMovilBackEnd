@@ -3,47 +3,33 @@ import prisma from '../prisma';
 import bcrypt from 'bcryptjs';
 
 export const updateProfile = async (req: Request, res: Response) => {
-    const { userId, newName, newPassword, newDescription } = req.params;
+    const { userId, newName, newPassword, newDescription } = req.query;
 
-    if (!userId || !newName || !newPassword || !newDescription) {
-        res.status(400).json({ error: 'Faltan parámetros para updateProfile' });
-        return
-    };
+    try {
+        if (!userId || !newName) {
+            res.status(400).json({ error: 'userId and newName are required' });
+            return
+        };
 
-    if (newPassword != '') {
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        try {
-            const user = await prisma.user.update({
-                where: {
-                    id: Number(userId),
-                },
-                data: {
-                    name: newName,
-                    password: hashedPassword,
-                    description: newDescription
-                }
-            });
+        const updateData: any = { name: newName };
 
-            res.json(user);
-        } catch (error) {
-            console.error('Error fetching user:', error);
-            res.status(500).json({ error: 'Failed to fetch user' }); // Manejar errores
+        if (newPassword) {
+            updateData.password = await bcrypt.hash(newPassword as string, 10);
         }
-    } else {
-        try {
-            const user = await prisma.user.update({
-                where: {
-                    id: Number(userId),
-                },
-                data: {
-                    name: newName,
-                    description: newDescription
-                }
-            });
 
-            res.json(user);
-        } catch (error) {
-            console.error('Error fetching user:', error);
-            res.status(500).json({ error: 'Failed to fetch user' }); // Manejar errores
+        // Only add description if it is provided
+        if (newDescription) {
+            updateData.description = newDescription;
         }
-    }};
+
+        const user = await prisma.user.update({
+            where: { id: Number(userId) },
+            data: updateData,
+        });
+
+        res.json(user);
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ error: 'Failed to update user' });
+    }
+};

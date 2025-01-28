@@ -4,6 +4,6 @@ import { updateProfile } from "../controllers/updateProfile";
 const updateProfileRouter = Router();
 
 // Definir la ruta para obtener los eventos de un usuario por su userId
-updateProfileRouter.get('/updateProfile/:userId/:newName/:newPassword/:newDescription', updateProfile);
+updateProfileRouter.get('/updateProfile', updateProfile);
 
 export default updateProfileRouter;
