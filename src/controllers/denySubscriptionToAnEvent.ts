@@ -4,6 +4,11 @@ import prisma from '../prisma';
 export const denySubscriptionToAnEvent = async (req: Request, res: Response) => {
   const { eventId,userId } = req.params;
   
+  if (!eventId || !userId) {
+    res.status(400).json({ error: 'Faltan parametros para denySubscriptionToAnEvent.' });
+    return
+    };
+
   try {
     if (!eventId || !userId) {
       res.status(400).json({ error: 'Faltan parametros.' });

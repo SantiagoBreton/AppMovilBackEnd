@@ -1,11 +1,14 @@
 import { Request, Response, RequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
-
 import prisma from '../prisma';
-
 
 export const userLogin: RequestHandler = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400).json({ error: 'Missing email or password' });
+        return
+    };
 
     try {
         const user = await prisma.user.findUnique({ where: { email } });
@@ -15,11 +18,7 @@ export const userLogin: RequestHandler = async (req: Request, res: Response): Pr
             return;
         }
 
-        console.log('User found:', user);
-
         let isPasswordValid = false;
-
-
         isPasswordValid = password === user.password || await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {

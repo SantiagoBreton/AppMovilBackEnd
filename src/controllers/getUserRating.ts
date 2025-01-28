@@ -3,6 +3,12 @@ import prisma from '../prisma';
 
 export const getUserRating = async (req: Request, res: Response) => {
     const { userId } = req.params;
+
+    if (!userId) {
+        res.status(400).json({ error: 'Faltan parámetros para getUserRating' });
+        return
+    };
+
     try {
         const allRatings = await prisma.userRatingByUser.findMany({
             where: {

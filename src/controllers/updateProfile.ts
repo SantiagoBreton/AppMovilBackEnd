@@ -4,6 +4,12 @@ import bcrypt from 'bcryptjs';
 
 export const updateProfile = async (req: Request, res: Response) => {
     const { userId, newName, newPassword, newDescription } = req.params;
+
+    if (!userId || !newName || !newPassword || !newDescription) {
+        res.status(400).json({ error: 'Faltan parámetros para updateProfile' });
+        return
+    };
+
     if (newPassword != '') {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         try {

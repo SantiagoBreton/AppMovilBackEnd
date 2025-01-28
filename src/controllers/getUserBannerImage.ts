@@ -4,6 +4,11 @@ import prisma from '../prisma';
 
 export const getUserBannerImage = async (req: Request, res: Response) => {
     const { userId } = req.params;
+
+    if (!userId) {
+        res.status(400).json({ error: 'Missing userId parameter' });
+        return;
+    }
     
     try {
 
@@ -17,10 +22,10 @@ export const getUserBannerImage = async (req: Request, res: Response) => {
 
         const imagePath = userProfileImage[0].imageUrl;
         const imageUrl = `http://${req.headers.host}/uploads/${path.basename(imagePath)}`;
-        //console.log('User banner image:', imageUrl);
-        res.status(200).json({ imageUrl }); // Return the image URL
-    } catch (error) {
         
+        res.status(200).json({ imageUrl }); 
+
+    } catch (error) {
         console.error('Error fetching user profile image:', error);
         res.status(500).json({ error: 'Failed to get user profile image, please try again later.' });
     }

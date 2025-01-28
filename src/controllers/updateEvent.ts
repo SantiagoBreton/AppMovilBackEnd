@@ -2,7 +2,12 @@ import { Request, Response } from "express";
 import prisma from '../prisma';
 
 export const updateEvent = async (req: Request, res: Response) => {
-    const { eventId, newName, newDescription, newDate,newTime } = req.params; // Obtener el userId desde los parámetros de la ruta
+    const { eventId, newName, newDescription, newDate,newTime } = req.params;
+
+    if (!eventId || !newName || !newDescription || !newDate || !newTime) {
+        res.status(400).json({ error: 'Faltan parámetros para updateEvent' });
+        return
+    };
 
     try {
         const parsedDate = new Date(newDate);
@@ -17,7 +22,7 @@ export const updateEvent = async (req: Request, res: Response) => {
             data: {
                 name: newName,
                 description: newDescription,
-                date: parsedDate.toISOString(), // Convert to ISO format
+                date: parsedDate.toISOString(),
                 time: newTime
             },
         });
@@ -25,6 +30,6 @@ export const updateEvent = async (req: Request, res: Response) => {
         res.json(event);
     } catch (error) {
         console.error('Error fetching events:', error);
-        res.status(500).json({ error: 'Failed to fetch events' }); // Manejar errores
+        res.status(500).json({ error: 'Failed to fetch events' });
     }
 };

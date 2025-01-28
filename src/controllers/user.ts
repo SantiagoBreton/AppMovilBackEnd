@@ -4,7 +4,11 @@ import prisma from '../prisma';
 
 export const createUser = async (req: Request, res: Response) => {
     const { name, email, password,rating } = req.body;
-    console.log(name, email, password);
+    
+    if (!name || !email || !password || !rating) {
+        res.status(400).json({ error: 'Faltan parámetros para createUser' });
+        return
+    };
     
     const user = await prisma.user.create({
         data: {

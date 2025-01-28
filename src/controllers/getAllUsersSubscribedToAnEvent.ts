@@ -2,13 +2,17 @@ import { Request, Response } from "express";
 import prisma from '../prisma';
 
 export const getAllUsersSubscribedToAnEvent = async (req: Request, res: Response) => {
-    const { eventId } = req.params; // Obtener el userId desde los parámetros de la ruta
+    const { eventId } = req.params;
+
+    if (!eventId) {
+        res.status(400).json({ error: 'Missing eventId' });
+        return;
+    }
 
     try {
-        // Fetch events from the database, filtrando por userId
         const getSubscribedUsersToAnEvent = await prisma.eventUser.findMany({
             where: {
-                eventId: Number(eventId), // Convertir userId a número
+                eventId: Number(eventId),
             },
         });
         const users = await prisma.user.findMany({
@@ -20,9 +24,9 @@ export const getAllUsersSubscribedToAnEvent = async (req: Request, res: Response
         });
         const sanitizedUsers = users.map(({ password, ...userWithoutPassword }) => userWithoutPassword);
 
-        res.json(sanitizedUsers); // Responder con los datos sin contraseñas
+        res.json(sanitizedUsers);
     } catch (error) {
         console.error('Error fetching events:', error);
-        res.status(500).json({ error: 'Failed to fetch events' }); // Manejar errores
+        res.status(500).json({ error: 'Failed to fetch events' });
     }
 };

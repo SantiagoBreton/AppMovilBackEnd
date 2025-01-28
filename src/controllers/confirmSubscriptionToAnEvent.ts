@@ -2,14 +2,20 @@ import { Request, Response } from "express";
 import prisma from '../prisma';
 
 export const confirmSubscriptionToAnEvent = async (req: Request, res: Response) => {
-  const { eventId,userId } = req.body;
+  const { eventId, userId } = req.body;
+
+  if (!eventId || !userId) {
+    res.status(400).json({ error: 'Missing parameters.' });
+    return;
+  }
+
   try {
     const event = await prisma.event.findUnique({
       where: {
         id: eventId,
       },
     });
-    
+
     if (!event) {
       res.status(404).json({ error: 'Event not found.' });
       return;
@@ -23,13 +29,13 @@ export const confirmSubscriptionToAnEvent = async (req: Request, res: Response) 
     });
 
     await prisma.eventPendingRequest.deleteMany({
-        where: {
-            userId,
-            eventId,
-        },
+      where: {
+        userId,
+        eventId,
+      },
     });
 
-    const updateEventParticipants = await prisma.event.update({
+    await prisma.event.update({
       where: {
         id: eventId,
       },
