@@ -20,6 +20,14 @@ export const getSubscribedEvents = async (req: Request, res: Response) => {
                 id: {
                     in: getSubscribedEventsByUserId.map(event => event.eventId)
                 }
+                
+            },
+            include: {
+                category: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
 
