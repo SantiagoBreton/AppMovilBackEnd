@@ -27,6 +27,7 @@ import getUserBannerImageRouter from './routes/getUserBannerImage';
 import updateProfileRouter from './routes/updateProfile';
 import getHostInfoByEventIdRouter from './routes/getHostInfoByEventId';
 import getAllCategoriesRouter from './routes/getAllCategories';
+import getPendingRequestedEventsRouter from './routes/getPendingRequestedEvents';
 
 const app = express();
 app.use(express.json());
@@ -62,7 +63,7 @@ app.use('/', getUserBannerImageRouter);
 app.get('/getUserByPartialName/:name', getUserByPartialName);
 app.use('/', getHostInfoByEventIdRouter);
 app.use('/', getAllCategoriesRouter);
-
+app.use('/', getPendingRequestedEventsRouter);
 
 
 
