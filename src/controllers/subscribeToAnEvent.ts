@@ -17,7 +17,7 @@ export const subscribeToEvent = async (req: Request, res: Response) => {
     });
     
     if (!event) {
-      res.status(404).json({ error: 'Event not found.' });
+      res.status(404).json({ error: 'Evento no encontrado.' });
       return;
     }
 
@@ -27,7 +27,7 @@ export const subscribeToEvent = async (req: Request, res: Response) => {
     }
 
     if (event.currentParticipants === event.maxParticipants) {
-      res.status(400).json({ error: 'Que desgracia Amigo, este evento ya esta lleno' });
+      res.status(400).json({ error: 'Este evento ya está lleno' });
       return;
     }
     const eventUser = await prisma.eventPendingRequest.create({

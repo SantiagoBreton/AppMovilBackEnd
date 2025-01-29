@@ -20,6 +20,16 @@ export const getPendingRequestedEvents = async (req: Request, res: Response) => 
             where: {
                 id: {
                     in: events.map(event => event.eventId)
+                },
+                date: {
+                    gte: new Date()
+                }
+            },
+            include: {
+                category: {
+                    select: {
+                        name: true
+                    }
                 }
             }
         });

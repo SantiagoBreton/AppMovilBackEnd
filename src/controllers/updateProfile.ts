@@ -7,7 +7,7 @@ export const updateProfile = async (req: Request, res: Response) => {
 
     try {
         if (!userId || !newName) {
-            res.status(400).json({ error: 'userId and newName are required' });
+            res.status(400).json({ error: 'userId y newName son necesarios' });
             return
         };
 
@@ -17,7 +17,6 @@ export const updateProfile = async (req: Request, res: Response) => {
             updateData.password = await bcrypt.hash(newPassword as string, 10);
         }
 
-        // Only add description if it is provided
         if (newDescription) {
             updateData.description = newDescription;
         }
@@ -29,7 +28,7 @@ export const updateProfile = async (req: Request, res: Response) => {
 
         res.json(user);
     } catch (error) {
-        console.error('Error updating user:', error);
-        res.status(500).json({ error: 'Failed to update user' });
+        console.error('Error al actualizar los datos del usuario:', error);
+        res.status(500).json({ error: 'Fallo al actualizar los datos del usuario' });
     }
 };

@@ -18,7 +18,7 @@ export const deleteEventById = async (req: Request, res: Response) => {
 
         res.json(events);
     } catch (error) {
-        console.error('Error fetching events:', error);
-        res.status(500).json({ error: 'Failed to fetch events' });
+        console.error('Error al cargar events:', error);
+        res.status(500).json({ error: 'Fallo al cargar eventos' });
     }
 };

@@ -5,7 +5,7 @@ export const getEventByPartialName = async (req: Request, res: Response) => {
     const { currentUserId, name } = req.params;
     
     if (!name || !currentUserId) {
-        res.status(400).json({ error: 'Faltan parametros para getEventByPartialName.' });
+        res.status(400).json({ error: 'Faltan parámetros para getEventByPartialName.' });
         return
     };
 
@@ -35,7 +35,7 @@ export const getEventByPartialName = async (req: Request, res: Response) => {
     
         res.json(events);
     } catch (error) {
-        console.error('Error fetching events:', error);
-        res.status(500).json({ error: 'Failed to fetch events' });
+        console.error('Error al cargar eventos:', error);
+        res.status(500).json({ error: 'Fallo al cargar eventos' });
     }
 }

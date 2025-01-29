@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import prisma from '../prisma';
 
-
 export const getEvents = async (req: Request, res: Response) => {
     const { distanceRadius, userLatitude, userLongitude } = req.params;
 
@@ -36,7 +35,6 @@ export const getEvents = async (req: Request, res: Response) => {
             Number(userLongitude),
             Number(distanceRadius));
 
-        
         const events = await prisma.event.findMany({
             where: {
                 latitude: {
@@ -58,7 +56,7 @@ export const getEvents = async (req: Request, res: Response) => {
         });
         res.json(events);
     } catch (error) {
-        console.error('Error fetching events:', error);
-        res.status(500).json({ error: 'Failed to fetch events' });
+        console.error('Error al cargar eventos:', error);
+        res.status(500).json({ error: 'Fallo al cargar eventos' });
     }
 }

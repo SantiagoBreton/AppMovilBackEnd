@@ -27,7 +27,7 @@ export const uploadUserBanner = async (req: Request, res: Response) => {
     const { userId } = req.body;
 
     if (!file) {
-      return res.status(400).send({ error: 'No file uploaded' });
+      return res.status(400).send({ error: 'No has subido ningun archivo' });
     }
 
     const UpdateUserProfileImage = await prisma.userBannerImage.updateMany({
@@ -40,14 +40,14 @@ export const uploadUserBanner = async (req: Request, res: Response) => {
     });
 
     if (!UpdateUserProfileImage) {
-      console.error('Error saving image to database:', UpdateUserProfileImage);
-      return res.status(500).send({ error: 'Failed to save image to the database.' });
+      console.error('Error al guardar la imagen en la base de datos:', UpdateUserProfileImage);
+      return res.status(500).send({ error: 'Fallo al guardar la imagen en la base de datos.' });
     }
 
-    return res.status(200).send({ message: 'File uploaded successfully', file });
+    return res.status(200).send({ message: 'Archivo subido correctamente', file });
     
   } catch (error) {
-    console.error('Error uploading file:', error);
-    return res.status(500).send({ error: 'Internal Server Error' });
+    console.error('Error al subir el archivo:', error);
+    return res.status(500).send({ error: 'Error interno del servidor' });
   }
 };

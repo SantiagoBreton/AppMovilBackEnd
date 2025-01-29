@@ -5,7 +5,7 @@ export const confirmSubscriptionToAnEvent = async (req: Request, res: Response) 
   const { eventId, userId } = req.body;
 
   if (!eventId || !userId) {
-    res.status(400).json({ error: 'Missing parameters.' });
+    res.status(400).json({ error: 'Faltan parámetros para confirmSubscriptionToAnEvent.' });
     return;
   }
 
@@ -17,7 +17,7 @@ export const confirmSubscriptionToAnEvent = async (req: Request, res: Response) 
     });
 
     if (!event) {
-      res.status(404).json({ error: 'Event not found.' });
+      res.status(404).json({ error: 'Evento no encontrado.' });
       return;
     }
 

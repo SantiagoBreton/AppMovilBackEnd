@@ -6,15 +6,15 @@ export const userLogin: RequestHandler = async (req: Request, res: Response): Pr
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.status(400).json({ error: 'Missing email or password' });
+        res.status(400).json({ error: 'Falta el mail o la contraseña' });
         return
     };
 
     try {
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
-            console.log('User not found');
-            res.status(401).json({ error: 'Invalid email or password' });
+            console.log('Usuario no encontrado');
+            res.status(401).json({ error: 'Mail o contraseña inválidos' });
             return;
         }
 
@@ -22,17 +22,14 @@ export const userLogin: RequestHandler = async (req: Request, res: Response): Pr
         isPasswordValid = password === user.password || await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            console.log('Invalid password');
-            console.log('Provided password:', password);
-            console.log('Stored password:', user.password);
-            res.status(401).json({ error: 'Invalid email or password' });
+            res.status(401).json({ error: 'Mail o contraseña inválidos' });
             return;
         }
         res.status(200).json({ 
             id:user.id
         })
     } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ error: 'Login failed' });
+        console.error('Error al iniciar sesión:', error);
+        res.status(500).json({ error: 'Falló el inicio de sesión' });
     }
 };

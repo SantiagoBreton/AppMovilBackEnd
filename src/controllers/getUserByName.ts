@@ -10,7 +10,7 @@ export const getUserByPartialName = async (req: Request, res: Response) => {
     };
 
     try {
-        const events = await prisma.user.findMany({
+        const users = await prisma.user.findMany({
             where: {
                 name: {
                     contains: name,
@@ -18,9 +18,12 @@ export const getUserByPartialName = async (req: Request, res: Response) => {
                 },
             },
         });
-        res.json(events);
+
+        const sanitizedUsers = users.map(({ password, ...userWithoutPassword }) => userWithoutPassword);
+
+        res.json(sanitizedUsers);
     } catch (error) {
-        console.error('Error fetching users:', error);
-        res.status(500).json({ error: 'Failed to fetch users' });
+        console.error('Error al cargar usuarios:', error);
+        res.status(500).json({ error: 'Fallo al cargar usuarios' });
     }
 }

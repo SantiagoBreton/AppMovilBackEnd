@@ -25,7 +25,7 @@ export const getUserProfileImage = async (req: Request, res: Response) => {
         res.status(200).json({ imageUrl });
 
     } catch (error) {
-        console.error('Error fetching user profile image:', error);
-        res.status(500).json({ error: 'Failed to get user profile image, please try again later.' });
+        console.error('Error al cargar la imagen del perfil:', error);
+        res.status(500).json({ error: 'Fallo al cargar la imagen del perfil, por favor intente de nuevo más tarde.' });
     }
 };

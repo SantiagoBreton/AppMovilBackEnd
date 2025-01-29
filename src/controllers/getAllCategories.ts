@@ -14,7 +14,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
         res.json(getAllCategories);
 
     } catch (error) {
-        console.error('Error fetching categories:', error);
-        res.status(500).json({ error: 'Failed to fetch categories' })
+        console.error('Error al cargar categorías:', error);
+        res.status(500).json({ error: 'Fallo al cargar categorías' })
     }
 };

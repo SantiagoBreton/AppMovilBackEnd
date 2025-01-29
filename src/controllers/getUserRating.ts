@@ -29,8 +29,8 @@ export const getUserRating = async (req: Request, res: Response) => {
         });
         res.json(allRatings);
     } catch (error) {
-        console.error('Error fetching ratings:', error);
-        res.status(500).json({ error: 'Failed to fetch ratings' });
+        console.error('Error al cargar calificaciones:', error);
+        res.status(500).json({ error: 'Fallo al cargar calificaciones' });
     }
 
 

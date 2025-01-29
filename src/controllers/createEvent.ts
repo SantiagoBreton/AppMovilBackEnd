@@ -5,11 +5,6 @@ import prisma from '../prisma';
 export const createEvent = async (req: Request, res: Response) => {
     const { name, date, latitude, longitude, description, maxParticipants,currentParticipants,rating,time, categoryName,userId } = req.body;
     
-    // if (!name || !date || !latitude || !longitude || !description || !maxParticipants || !currentParticipants || !rating || !time || !categoryName || !userId) {
-    //     res.status(400).json({ error: 'Missing parameters.' });
-    //     return
-    // };
-
     const category = await prisma.category.findFirst({
         where: {
             name: categoryName
