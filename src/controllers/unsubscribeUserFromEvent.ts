@@ -10,7 +10,7 @@ export const unsubscribeUserFromEvent = async (req: Request, res: Response) => {
     };
 
     try {
-        const userEvents = await prisma.eventUser.delete({
+        const existingEvent = await prisma.eventUser.findUnique({
             where: {
                 userId_eventId: {
                     userId: Number(userId),
@@ -18,18 +18,40 @@ export const unsubscribeUserFromEvent = async (req: Request, res: Response) => {
                 }
             }
         });
-        const events = await prisma.event.update({
-            where: {
-                id: Number(eventId)
-            },
-            data: {
-                currentParticipants: {
-                    decrement: 1
-                }
-            }
-        });
 
-        res.json(userEvents);
+        if (!existingEvent) {
+            const pendingUserEvents = await prisma.eventPendingRequest.delete({
+                where: {
+                    userId_eventId: {
+                        userId: Number(userId),
+                        eventId: Number(eventId),
+                    }
+                }
+            });
+            res.json(pendingUserEvents);
+        }else{
+            const userEvents = await prisma.eventUser.delete({
+                where: {
+                    userId_eventId: {
+                        userId: Number(userId),
+                        eventId: Number(eventId),
+                    }
+                }
+            });
+            
+            await prisma.event.update({
+                where: {
+                    id: Number(eventId)
+                },
+                data: {
+                    currentParticipants: {
+                        decrement: 1
+                    }
+                }
+            });
+            res.json(userEvents);
+        }
+
     } catch (error) {
         console.error('Error al cargar eventos:', error);
         res.status(500).json({ error: 'Fallo al cargar events' });
