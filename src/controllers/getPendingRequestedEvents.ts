@@ -32,8 +32,11 @@ export const getPendingRequestedEvents = async (req: Request, res: Response) => 
                 }
             }
         });
+        eventsToReturn.forEach(event => {
+            event.longitude = event.longitude + event.latitudeOffset
+            event.latitude = event.latitude + event.longitudeOffset
+        });
 
-        console.log(eventsToReturn);
         res.json(eventsToReturn);
     } catch (error) {
         res.status(500).json({ error: 'No se ha podido obtener la informacion de los eventos solicitados, intentalo mas tarde.' });

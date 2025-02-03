@@ -32,6 +32,10 @@ export const getEventByPartialName = async (req: Request, res: Response) => {
                 }
             }
         });
+        events.forEach(event => {
+            event.longitude = event.longitude+ event.latitudeOffset
+            event.latitude = event.latitude+ event.longitudeOffset
+        });
     
         res.json(events);
     } catch (error) {
