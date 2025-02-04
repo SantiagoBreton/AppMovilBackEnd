@@ -28,8 +28,8 @@ Asegúrate de tener instalado:
    cd appmovilesbe
    ```
 2. Instala las dependencias:
-  📦 Dependencias principales
-  Ejecuta cada línea para instalar las dependencias de producción:
+📦 Dependencias principales
+Ejecuta cada línea para instalar las dependencias de producción:
 ```bash
  npm install @prisma/client
  npm install bcryptjs
