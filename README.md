@@ -63,8 +63,6 @@ npm install
 Crea un archivo `.env` en la raíz del proyecto y agrega las siguientes variables:
 ```env
 DATABASE_URL=postgresql://usuario:contraseña@localhost:5432/tu_base_de_datos
-JWT_SECRET=tu_secreto_seguro
-PORT=5000
 ```
 
 ### Configuración de la Base de Datos
