@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../prisma';
 
-const secret = 'your_jwt_secret'; // Use a secure secret in production
+const secret = 'your_jwt_secret';
 
 export const register = async (req: Request, res: Response) => {
     const { email, name, password,rating } = req.body;
@@ -56,17 +56,6 @@ export const login: RequestHandler = async (req: Request, res: Response): Promis
         console.log('User found:', user);
 
         let isPasswordValid = false;
-
-        // // Check if the password is hashed
-        // if (user.password.startsWith('$2a$')) {
-        //     // Compare hashed password
-        //     isPasswordValid = await bcrypt.compare(password, user.password);
-        // } else {
-        //     // Compare plain text password
-        //     isPasswordValid = password === user.password;
-        // }
-
-
         isPasswordValid = password === user.password || await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
